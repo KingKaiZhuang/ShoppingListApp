@@ -24,41 +24,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myshoppinglistapp.ui.theme.MyShoppingListAppTheme
 
+
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MyShoppingListAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    var sItems by remember { mutableStateOf(listOf<ShoppingItem>()) }
-                    Column(
-                        modifier = Modifier.fillMaxSize().padding(innerPadding),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Button(
-                            onClick = {},
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
-                        ) {
-                            Text("Add Item")
-                        }
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize().padding(16.dp)
-                        ) {
-                            items(sItems) {
-                                // 這裡先空著，至少程式不會壞
-                            }
-                        }
-                    }
-                }
+                ShoppingListApp()
             }
         }
     }
 }
 
-data class ShoppingItem(
-    val id: Int,
-    var name: String,
-    var quantity: Int,
-    var isEditing: Boolean = false
-)
