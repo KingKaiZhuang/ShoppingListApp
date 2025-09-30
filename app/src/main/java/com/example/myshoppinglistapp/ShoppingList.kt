@@ -3,12 +3,14 @@ package com.example.myshoppinglistapp
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,12 +29,13 @@ data class ShoppingItem(
     var isEditing: Boolean = false
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingListApp() {
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         var sItems by remember { mutableStateOf(listOf<ShoppingItem>()) }
         var showDialog by remember { mutableStateOf(false) }
+        var itemName by remember { mutableStateOf("") }
+        var itemQuantity by remember { mutableStateOf("") }
 
         Column(
             modifier = Modifier
@@ -56,10 +59,34 @@ fun ShoppingListApp() {
                 }
             }
         }
-        if(showDialog) {
-            AlertDialog(onDismissRequest = {showDialog = false}) {
-                Text("I'M AN ALERT DIALOG!")
-            }
+        if (showDialog) {
+            AlertDialog(
+                onDismissRequest = { showDialog = false },
+                confirmButton = { },
+                title = { Text("Add Shopping Item") },
+                text = {
+                    Column {
+                        OutlinedTextField(
+                            value = itemName,
+                            onValueChange = { itemName = it },
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                        )
+                        OutlinedTextField(
+                            value = itemQuantity,
+                            onValueChange = { itemQuantity = it },
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                        )
+                    }
+                }
+
+            )
+
         }
     }
 }
